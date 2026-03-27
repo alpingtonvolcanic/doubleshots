@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doubleshots — Live Band Hire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C96A;
+      --gold-dim: #8B6914;
+      --black: #070707;
+      --black-2: #0f0f0f;
+      --black-3: #161616;
+      --black-4: #1e1e1e;
+      --white: #f5f0e8;
+      --grey: #888;
+      --grey-light: #aaa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--gold); color: var(--black); }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(7,7,7,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--grey-light);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold) !important;
+      padding: 0.45rem 1.2rem;
+      border-radius: 2px;
+      transition: background 0.25s, color 0.25s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold) !important;
+      color: var(--black) !important;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(7,7,7,0.97);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-style: italic;
+      transition: color 0.25s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ===== HERO ===== */
+    /* Mobile-first: two stacked panels */
+    #hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    /* Animated grain — desktop only */
+    #hero::before {
+      content: '';
+      display: none;
+      position: absolute;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      animation: grainMove 8s steps(2) infinite;
+      pointer-events: none;
+    }
+
+    @keyframes grainMove {
+      0%   { transform: translate(0, 0); }
+      10%  { transform: translate(-2%, -3%); }
+      20%  { transform: translate(3%, 2%); }
+      30%  { transform: translate(-1%, 4%); }
+      40%  { transform: translate(4%, -1%); }
+      50%  { transform: translate(-3%, 2%); }
+      60%  { transform: translate(2%, -4%); }
+      70%  { transform: translate(-4%, 1%); }
+      80%  { transform: translate(1%, 3%); }
+      90%  { transform: translate(-2%, -2%); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Radial pulse rings — desktop only */
+    .pulse-ring {
+      display: none;
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.12);
+      animation: pulseExpand 4s ease-out infinite;
+      pointer-events: none;
+    }
+
+    .pulse-ring:nth-child(1) { width: 400px; height: 400px; animation-delay: 0s; }
+    .pulse-ring:nth-child(2) { width: 600px; height: 600px; animation-delay: 1.2s; }
+    .pulse-ring:nth-child(3) { width: 800px; height: 800px; animation-delay: 2.4s; }
+
+    @keyframes pulseExpand {
+      0%   { opacity: 0.5; transform: scale(0.8); }
+      100% { opacity: 0;   transform: scale(1.4); }
+    }
+
+    /* Spotlight glow — desktop only */
+    .spotlight {
+      display: none;
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: spotlightFloat 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes spotlightFloat {
+      0%   { transform: translate(-80px, -40px) scale(1); }
+      50%  { transform: translate(80px, 20px) scale(1.1); }
+      100% { transform: translate(-30px, 60px) scale(0.95); }
+    }
+
+    /* TOP panel: pure black text area (mobile) */
+    .hero-text-panel {
+      background: var(--black);
+      padding: 40px 2rem 40px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .hero-pre {
+      font-size: 0.72rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.6rem;
+      animation: fadeUp 1.2s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 14rem);
+      word-break: keep-all;
+      white-space: nowrap;
+      width: 100%;
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, #a07820 70%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeUp 1.2s 0.2s ease both, shimmer 6s 1.4s linear infinite;
+      background-size: 300% 300%;
+      filter: drop-shadow(0 0 60px rgba(201,168,76,0.18));
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 3.5vw, 2.1rem);
+      color: rgba(245,240,232,0.75);
+      margin-top: 1rem;
+      letter-spacing: 0.06em;
+      animation: fadeUp 1.2s 0.5s ease both;
+    }
+
+    .hero-divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem auto;
+      animation: fadeUp 1.2s 0.7s ease both;
+    }
+
+    .hero-sub {
+      font-size: 0.82rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--grey);
+      animation: fadeUp 1.2s 0.9s ease both;
+    }
+
+    /* Scroll button flows in text panel on mobile */
+    .hero-scroll {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      transform: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 2;
+      margin-top: 2rem;
+      animation: fadeIn 2s 1.5s ease both;
+    }
+
+    .hero-scroll span {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollDrop {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* BOTTOM panel: band photo (mobile) */
+    .hero-image-panel {
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .hero-image-panel img {
+      display: block;
+      width: 100%;
+      height: 50vh;
+      object-fit: cover;
+    }
+
+    /* ===== SHOWREEL ===== */
+    #showreel {
+      background: var(--black-2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .showreel-shell {
+      border: 1px solid rgba(201,168,76,0.25);
+      background: linear-gradient(145deg, rgba(201,168,76,0.06), rgba(255,255,255,0.01));
+      padding: 1rem;
+    }
+
+    .showreel-video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border: 1px solid rgba(201,168,76,0.18);
+    }
+
+    .showreel-caption {
+      margin-top: 0.8rem;
+      color: rgba(245,240,232,0.6);
+      font-size: 0.86rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ===== HERO — DESKTOP (768px+) ===== */
+    @media (min-width: 768px) {
+      #hero {
+        min-height: 100vh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        background:
+          linear-gradient(to bottom, rgba(7,7,7,0.35) 0%, rgba(7,7,7,0.30) 50%, rgba(7,7,7,0.55) 100%),
+          url('images/hero.jpg') center center / cover no-repeat;
+      }
+
+      #hero::before { display: block; }
+
+      .pulse-ring  { display: block; }
+      .spotlight   { display: block; }
+
+      .hero-text-panel {
+        background: transparent;
+        padding: 0;
+        width: 100%;
+      }
+
+      .hero-content {
+        padding: 2rem 2rem 5rem;
+        background: linear-gradient(to top, rgba(7,7,7,0.72) 0%, rgba(7,7,7,0.45) 60%, transparent 100%);
+      }
+
+      .hero-scroll {
+        position: absolute;
+        bottom: 2.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 0;
+      }
+
+      .hero-image-panel { display: none; }
+    }
+
+    /* ===== SECTION BASE ===== */
+    section {
+      padding: 7rem 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ===== ABOUT ===== */
+    #about {
+      background: var(--black-2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #about::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      color: rgba(245,240,232,0.72);
+      font-size: 1.05rem;
+      line-height: 1.85;
+      margin-bottom: 1.4rem;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-text strong {
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .stat-box {
+      border: 1px solid rgba(201,168,76,0.18);
+      padding: 1.8rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .stat-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .stat-box:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+    .stat-box:hover::before { opacity: 1; }
+
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      line-height: 1;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-top: 0.4rem;
+    }
+
+    /* ===== WHAT WE OFFER ===== */
+    #offer {
+      background: var(--black);
+      position: relative;
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 0;
+    }
+
+    .offer-card {
+      background: var(--black-3);
+      border: 1px solid rgba(201,168,76,0.12);
+      padding: 2.8rem 2.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), border-color 0.35s;
+      cursor: default;
+    }
+
+    .offer-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .offer-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.06) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+
+    .offer-card:hover { transform: translateY(-8px); border-color: rgba(201,168,76,0.3); }
+    .offer-card:hover::before { transform: scaleX(1); }
+    .offer-card:hover::after { opacity: 1; }
+
+    .offer-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1.4rem;
+      display: block;
+      filter: grayscale(0.3);
+    }
+
+    .offer-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+      color: var(--white);
+    }
+
+    .offer-card p {
+      color: rgba(245,240,232,0.6);
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+
+    /* ===== REPERTOIRE ===== */
+    #repertoire {
+      background: var(--black-2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #repertoire::after {
+      content: '';
+      position: absolute;
+      bottom: -300px;
+      left: -200px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.04) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .repertoire-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .repertoire-search-wrap {
+      position: relative;
+    }
+
+    .repertoire-search {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--white);
+      padding: 0.7rem 1.2rem 0.7rem 2.8rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      width: 240px;
+      outline: none;
+      transition: border-color 0.25s, background 0.25s;
+      border-radius: 2px;
+    }
+
+    .repertoire-search::placeholder { color: var(--grey); }
+    .repertoire-search:focus {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.04);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--grey);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    .repertoire-count {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    #repertoire-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+    }
+
+    .song-item {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.04);
+      padding: 0.85rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      transition: background 0.2s, border-color 0.2s;
+      border-radius: 2px;
+    }
+
+    .song-item:hover {
+      background: rgba(201,168,76,0.06);
+      border-color: rgba(201,168,76,0.2);
+    }
+
+    .song-artist {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .song-title {
+      font-size: 0.9rem;
+      color: rgba(245,240,232,0.85);
+      font-weight: 300;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem;
+      color: var(--grey);
+      font-style: italic;
+      display: none;
+    }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .contact-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .contact-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .contact-pre {
+      font-size: 0.72rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+    }
+
+    .contact-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .contact-desc {
+      color: rgba(245,240,232,0.62);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .contact-buttons {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--gold);
+      color: var(--black);
+      padding: 0.95rem 2.2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 4px 30px rgba(201,168,76,0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(201,168,76,0.38);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: transparent;
+      color: var(--gold);
+      padding: 0.95rem 2.2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 2px;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(201,168,76,0.08);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .contact-email {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      color: rgba(245,240,232,0.4);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-email a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-email a:hover { color: var(--gold-light); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.14em;
+      color: var(--gold-dim);
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.22);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ===== GALLERY ===== */
+    #gallery {
+      background: var(--black-3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-grid {
+      columns: 3;
+      column-gap: 1rem;
+      margin-top: 0;
+    }
+
+    .audio-gallery-title {
+      margin-top: 3.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .now-playing-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.4rem;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 999px;
+      background: rgba(201,168,76,0.06);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .now-playing-chip.active {
+      border-color: rgba(201,168,76,0.8);
+      background: rgba(201,168,76,0.14);
+    }
+
+    .now-playing-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      white-space: nowrap;
+    }
+
+    .now-playing-track {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      color: rgba(245,240,232,0.86);
+    }
+
+    .audio-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .audio-card {
+      border: 1px solid rgba(201,168,76,0.18);
+      background: rgba(255,255,255,0.02);
+      padding: 1rem;
+      border-radius: 3px;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .audio-card:hover {
+      border-color: rgba(201,168,76,0.55);
+      background: rgba(201,168,76,0.06);
+    }
+
+    .audio-card.playing {
+      border-color: rgba(201,168,76,0.7);
+      background: linear-gradient(140deg, rgba(201,168,76,0.16), rgba(255,255,255,0.03));
+    }
+
+    .audio-track {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      margin-bottom: 0.65rem;
+      color: var(--white);
+    }
+
+    .audio-player-ui {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .audio-play-btn {
+      border: 1px solid rgba(201,168,76,0.65);
+      background: transparent;
+      color: var(--gold-light);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.46rem 0.7rem;
+      border-radius: 2px;
+      cursor: pointer;
+      min-width: 74px;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .audio-card.playing .audio-play-btn,
+    .audio-play-btn:hover {
+      background: var(--gold);
+      color: var(--black);
+      border-color: var(--gold);
+    }
+
+    .audio-waveform {
+      display: grid;
+      grid-template-columns: repeat(14, 1fr);
+      align-items: center;
+      gap: 3px;
+      height: 34px;
+      opacity: 0.8;
+    }
+
+    .audio-waveform span {
+      display: block;
+      width: 100%;
+      height: 16%;
+      min-height: 3px;
+      background: rgba(201,168,76,0.35);
+      border-radius: 999px;
+      transform-origin: center;
+    }
+
+    .audio-card.playing .audio-waveform span {
+      animation: equalizer 0.95s ease-in-out infinite;
+    }
+
+    .audio-card.playing .audio-waveform span:nth-child(2n) { animation-duration: 0.75s; }
+    .audio-card.playing .audio-waveform span:nth-child(3n) { animation-duration: 1.15s; }
+    .audio-card.playing .audio-waveform span:nth-child(4n) { animation-delay: 0.12s; }
+
+    @keyframes equalizer {
+      0%, 100% { transform: scaleY(0.35); background: rgba(201,168,76,0.32); }
+      50% { transform: scaleY(1); background: rgba(232,201,106,0.85); }
+    }
+
+    .audio-time {
+      font-size: 0.72rem;
+      color: rgba(245,240,232,0.65);
+      letter-spacing: 0.08em;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .audio-seek {
+      width: 100%;
+      appearance: none;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--gold) var(--seek-progress, 0%), rgba(255,255,255,0.16) var(--seek-progress, 0%));
+      cursor: pointer;
+      outline: none;
+    }
+
+    .audio-seek::-webkit-slider-thumb {
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      border: 1px solid var(--gold-dim);
+    }
+
+    .audio-seek::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      border: 1px solid var(--gold-dim);
+    }
+
+    .audio-seek::-moz-range-track {
+      height: 4px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+    }
+
+    .audio-source {
+      display: none;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      border-radius: 3px;
+      border: 1px solid rgba(201,168,76,0);
+      transition: border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .gallery-item:hover {
+      border-color: rgba(201,168,76,0.55);
+    }
+
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1), filter 0.45s;
+      filter: brightness(0.88) saturate(0.9);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      filter: brightness(1) saturate(1);
+    }
+
+    @media (max-width: 900px) {
+      .gallery-grid { columns: 2; }
+      .audio-gallery-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .gallery-grid { columns: 1; }
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.75s cubic-bezier(0.4,0,0.2,1), transform 0.75s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.22s; }
+    .reveal-delay-3 { transition-delay: 0.34s; }
+    .reveal-delay-4 { transition-delay: 0.46s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .offer-grid { grid-template-columns: 1fr 1fr; }
+      #repertoire-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.4rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 5rem 1.4rem; }
+      .offer-grid { grid-template-columns: 1fr; }
+      #repertoire-grid { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .repertoire-header { flex-direction: column; align-items: flex-start; }
+      .repertoire-search { width: 100%; }
+      footer { flex-direction: column; text-align: center; }
+      .pulse-ring:nth-child(2), .pulse-ring:nth-child(3) { display: none; }
+      .showreel-shell { padding: 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#hero" class="nav-logo">Doubleshots</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#offer">What We Offer</a></li>
+      <li><a href="#showreel">Showreel</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#repertoire">Repertoire</a></li>
+      <li><a href="#contact" class="nav-cta">Book Us</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about"       onclick="closeMobileMenu()">About</a>
+    <a href="#offer"       onclick="closeMobileMenu()">What We Offer</a>
+    <a href="#showreel"    onclick="closeMobileMenu()">Showreel</a>
+    <a href="#gallery"     onclick="closeMobileMenu()">Gallery</a>
+    <a href="#repertoire"  onclick="closeMobileMenu()">Repertoire</a>
+    <a href="#contact"     onclick="closeMobileMenu()">Book Us</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <div class="spotlight"></div>
+
+    <div class="hero-text-panel">
+      <div class="hero-content">
+        <h1 class="hero-title">Doubleshots</h1>
+        <p class="hero-tagline">Live Band Hire</p>
+        <div class="hero-divider"></div>
+        <p class="hero-sub">Weddings &nbsp;·&nbsp; Corporate Events &nbsp;·&nbsp; Private Parties</p>
+      </div>
+      <div class="hero-scroll">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+
+    <div class="hero-image-panel">
+      <img src="images/hero.jpg" alt="Doubleshots live band performing" />
+    </div>
+  </section>
+
+  <!-- SHOWREEL -->
+  <section id="showreel">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Performance Video</p>
+        <h2 class="section-title">Watch Our Showreel</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="showreel-shell reveal reveal-delay-1">
+        <video class="showreel-video" controls preload="metadata" playsinline>
+          <source src="media/The Double Shots - Showreel.mov" type="video/quicktime" />
+          Your browser does not support embedded video playback.
+        </video>
+        <p class="showreel-caption">Live energy, real crowds, zero backing tracks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p class="section-label">About the Band</p>
+          <h2 class="section-title">We bring the<br /><em style="font-style:italic;color:var(--gold)">party to life.</em></h2>
+          <div class="section-divider"></div>
+          <p>
+            <strong>Doubleshots</strong> are a high-energy live band based in the UK, delivering
+            unforgettable performances at weddings, corporate events, and private parties
+            across the country.
+          </p>
+          <p>
+            From the first song to the last encore, we read the room and keep the dance
+            floor packed. Our <strong>versatile repertoire</strong> spans five decades of the
+            greatest hits — classic rock, Motown, pop, indie, and everything in between.
+          </p>
+          <p>
+            Professional, reliable, and utterly electric — let Doubleshots turn your
+            event into a night nobody will forget.
+          </p>
+        </div>
+        <div class="about-stats reveal reveal-delay-2">
+          <div class="stat-box">
+            <div class="stat-number">60+</div>
+            <div class="stat-label">Songs in repertoire</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">UK</div>
+            <div class="stat-label">Nationwide availability</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">5★</div>
+            <div class="stat-label">Client satisfaction</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">Any</div>
+            <div class="stat-label">Venue, any size</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE OFFER -->
+  <section id="offer">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">What We Offer</p>
+        <h2 class="section-title">The perfect band<br />for every occasion.</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="offer-grid">
+        <div class="offer-card reveal reveal-delay-1">
+          <span class="offer-icon">💍</span>
+          <h3>Weddings</h3>
+          <p>Your wedding day deserves live music that moves people. We play everything from romantic first-dance moments to high-energy floor-fillers that keep your guests dancing until last orders.</p>
+        </div>
+        <div class="offer-card reveal reveal-delay-2">
+          <span class="offer-icon">🏢</span>
+          <h3>Corporate Events</h3>
+          <p>From product launches to award ceremonies and company parties, we bring professionalism and energy in equal measure — the kind of entertainment your colleagues will still be talking about at the next event.</p>
+        </div>
+        <div class="offer-card reveal reveal-delay-3">
+          <span class="offer-icon">🎉</span>
+          <h3>Private Parties</h3>
+          <p>Birthdays, anniversaries, garden parties, or any reason to celebrate — we tailor our set to your crowd and your vibe. A live band transforms a good party into a legendary one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Photos & Music</p>
+        <h2 class="section-title">See And Hear Us Live</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="gallery-grid reveal reveal-delay-1">
+        <div class="gallery-item">
+          <img src="images/gallery1.jpg" alt="Doubleshots live performance" loading="lazy" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/gallery2.jpg" alt="Doubleshots live performance" loading="lazy" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/gallery3.jpg" alt="Doubleshots live performance" loading="lazy" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/gallery4.jpg" alt="Doubleshots live performance" loading="lazy" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/gallery5.jpg" alt="Doubleshots live performance" loading="lazy" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/gallery6.jpg" alt="Doubleshots live performance" loading="lazy" />
+        </div>
+      </div>
+      <h3 class="audio-gallery-title reveal reveal-delay-2">Music Gallery</h3>
+      <div class="now-playing-chip reveal reveal-delay-3" id="nowPlaying" aria-live="polite">
+        <span class="now-playing-label">Now Playing</span>
+        <span class="now-playing-track" id="nowPlayingTrack">Nothing playing</span>
+      </div>
+      <div class="audio-gallery-grid reveal reveal-delay-4">
+        <div class="audio-card">
+          <p class="audio-track">Don't Stop Me Now</p>
+          <div class="audio-player-ui">
+            <button type="button" class="audio-play-btn" aria-label="Play Don't Stop Me Now">Play</button>
+            <div class="audio-waveform" aria-hidden="true"></div>
+            <p class="audio-time">0:00 / 0:00</p>
+          </div>
+          <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek Don't Stop Me Now" />
+          <audio class="audio-source" preload="metadata">
+            <source src="media/Doubleshots - Don't Stop Me Now.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <p class="audio-track">I'm Yours</p>
+          <div class="audio-player-ui">
+            <button type="button" class="audio-play-btn" aria-label="Play I'm Yours">Play</button>
+            <div class="audio-waveform" aria-hidden="true"></div>
+            <p class="audio-time">0:00 / 0:00</p>
+          </div>
+          <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek I'm Yours" />
+          <audio class="audio-source" preload="metadata">
+            <source src="media/Doubleshots - I'm Yours.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <p class="audio-track">Mr Brightside</p>
+          <div class="audio-player-ui">
+            <button type="button" class="audio-play-btn" aria-label="Play Mr Brightside">Play</button>
+            <div class="audio-waveform" aria-hidden="true"></div>
+            <p class="audio-time">0:00 / 0:00</p>
+          </div>
+          <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek Mr Brightside" />
+          <audio class="audio-source" preload="metadata">
+            <source src="media/Doubleshots - Mr Brightside.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <p class="audio-track">September</p>
+          <div class="audio-player-ui">
+            <button type="button" class="audio-play-btn" aria-label="Play September">Play</button>
+            <div class="audio-waveform" aria-hidden="true"></div>
+            <p class="audio-time">0:00 / 0:00</p>
+          </div>
+          <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek September" />
+          <audio class="audio-source" preload="metadata">
+            <source src="media/Doubleshots - September.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="audio-card">
+          <p class="audio-track">Uptown Funk</p>
+          <div class="audio-player-ui">
+            <button type="button" class="audio-play-btn" aria-label="Play Uptown Funk">Play</button>
+            <div class="audio-waveform" aria-hidden="true"></div>
+            <p class="audio-time">0:00 / 0:00</p>
+          </div>
+          <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek Uptown Funk" />
+          <audio class="audio-source" preload="metadata">
+            <source src="media/Doubleshots - Uptown Funk.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPERTOIRE -->
+  <section id="repertoire">
+    <div class="container">
+      <div class="repertoire-header reveal">
+        <div>
+          <p class="section-label">Sample Repertoire</p>
+          <h2 class="section-title">Something for everyone.</h2>
+          <div class="section-divider"></div>
+        </div>
+        <div>
+          <p class="repertoire-count" id="songCount"></p>
+          <div class="repertoire-search-wrap" style="margin-top:0.8rem;">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              class="repertoire-search"
+              id="searchInput"
+              placeholder="Search songs or artists…"
+              aria-label="Search repertoire"
+            />
+          </div>
+        </div>
+      </div>
+      <div id="repertoire-grid">
+        <div class="no-results" id="noResults">No songs match your search.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-bg"></div>
+    <div class="contact-inner reveal">
+      <p class="contact-pre">Get in touch</p>
+      <h2 class="contact-title">Ready to <em>book?</em></h2>
+      <p class="contact-desc">
+        Let's make your event extraordinary. Drop us a line and we'll get back to you
+        swiftly with availability, pricing, and anything else you need.
+      </p>
+      <div class="contact-buttons">
+        <a href="mailto:info@doubleshots.co.uk" class="btn-primary">
+          ✉ &nbsp;Email Us
+        </a>
+        <a href="https://doubleshots.co.uk" class="btn-secondary" target="_blank" rel="noopener">
+          ↗ &nbsp;Visit Website
+        </a>
+      </div>
+      <p class="contact-email">
+        <a href="mailto:info@doubleshots.co.uk">info@doubleshots.co.uk</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Doubleshots</div>
+    <div class="footer-copy">© 2024 Doubleshots. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#showreel">Showreel</a>
+      <a href="#repertoire">Repertoire</a>
+      <a href="mailto:info@doubleshots.co.uk">Contact</a>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    // ---- Repertoire Data ----
+    const songs = [
+      { artist: "ABBA", title: "Gimme Gimme Gimme" },
+      { artist: "ABBA", title: "Mamma Mia" },
+      { artist: "Amy Winehouse", title: "Valerie" },
+      { artist: "Blondie", title: "Call Me" },
+      { artist: "Blondie", title: "Hanging on the Telephone" },
+      { artist: "Blur", title: "Parklife" },
+      { artist: "Bon Jovi", title: "Livin' on a Prayer" },
+      { artist: "Bruno Mars", title: "Locked out of Heaven" },
+      { artist: "Bryan Adams", title: "Summer of '69" },
+      { artist: "Cee Lo Green", title: "Forget You" },
+      { artist: "Chic", title: "Good Times" },
+      { artist: "The Commitments", title: "Mustang Sally" },
+      { artist: "Daft Punk", title: "Get Lucky" },
+      { artist: "Dandy Warhols", title: "Bohemian Like You" },
+      { artist: "David Bowie", title: "Let's Dance" },
+      { artist: "Diana Ross", title: "I'm Coming Out" },
+      { artist: "DNCE", title: "Cake by the Ocean" },
+      { artist: "Doobie Brothers", title: "Long Train Runnin'" },
+      { artist: "Dua Lipa", title: "Don't Start Now" },
+      { artist: "Earth, Wind & Fire", title: "September" },
+      { artist: "Elton John", title: "I'm Still Standing" },
+      { artist: "Fleetwood Mac", title: "Dreams" },
+      { artist: "Florence + the Machine", title: "You Got the Love" },
+      { artist: "Four Seasons", title: "Oh What a Night" },
+      { artist: "George Michael", title: "Faith" },
+      { artist: "Girls Aloud", title: "Love Machine" },
+      { artist: "Huey Lewis", title: "Power of Love" },
+      { artist: "Jamiroquai", title: "Love Foolosophy" },
+      { artist: "Jason Mraz", title: "I'm Yours" },
+      { artist: "Jet", title: "Are You Gonna Be My Girl" },
+      { artist: "Journey", title: "Don't Stop Believin'" },
+      { artist: "Justin Timberlake", title: "Can't Stop the Feeling" },
+      { artist: "Kings of Leon", title: "Sex on Fire" },
+      { artist: "Lizzo", title: "About Damn Time" },
+      { artist: "Michael Jackson", title: "Billie Jean" },
+      { artist: "Michael Jackson", title: "Thriller" },
+      { artist: "Madness", title: "It Must Be Love" },
+      { artist: "Mark Ronson", title: "Uptown Funk" },
+      { artist: "Moloko", title: "Sing It Back" },
+      { artist: "Oasis", title: "Don't Look Back in Anger" },
+      { artist: "Oasis", title: "Wonderwall" },
+      { artist: "Oasis", title: "Roll with It" },
+      { artist: "OneRepublic", title: "Counting Stars" },
+      { artist: "OneRepublic", title: "I Ain't Worried" },
+      { artist: "Paulo Nutini", title: "New Shoes" },
+      { artist: "Peter Gabriel", title: "Sledgehammer" },
+      { artist: "Pharrell", title: "Happy" },
+      { artist: "Portugal. The Man", title: "Feel It Still" },
+      { artist: "Queen", title: "Don't Stop Me Now" },
+      { artist: "Ray Parker Jr.", title: "Ghostbusters" },
+      { artist: "Ricky Martin", title: "Livin' La Vida Loca" },
+      { artist: "Sam Fender", title: "Seventeen Going Under" },
+      { artist: "Sister Sledge", title: "We Are Family" },
+      { artist: "Sister Sledge", title: "Lost in Music" },
+      { artist: "Sophie Ellis-Bextor", title: "Murder on the Dancefloor" },
+      { artist: "Sophie Ellis-Bextor", title: "Groovejet" },
+      { artist: "Stevie Wonder", title: "Signed Sealed Delivered" },
+      { artist: "Stevie Wonder", title: "Superstition" },
+      { artist: "Taylor Swift", title: "Shake It Off" },
+      { artist: "The Killers", title: "Mr Brightside" },
+      { artist: "The Kooks", title: "Naive" },
+      { artist: "The Police", title: "Roxanne" },
+      { artist: "The Strokes", title: "Last Nite" },
+      { artist: "Walk the Moon", title: "Shut Up and Dance" },
+      { artist: "Wheatus", title: "Teenage Dirtbag" },
+      { artist: "Wilson Pickett", title: "Higher and Higher" },
+      { artist: "10cc", title: "Dreadlock Holiday" },
+    ];
+
+    function renderSongs(list) {
+      const grid = document.getElementById('repertoire-grid');
+      const noResults = document.getElementById('noResults');
+      // Remove existing song items
+      grid.querySelectorAll('.song-item').forEach(el => el.remove());
+
+      if (list.length === 0) {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+        list.forEach(s => {
+          const el = document.createElement('div');
+          el.className = 'song-item';
+          el.innerHTML = `<span class="song-artist">${s.artist}</span><span class="song-title">${s.title}</span>`;
+          grid.appendChild(el);
+        });
+      }
+
+      document.getElementById('songCount').textContent =
+        list.length === songs.length
+          ? `${songs.length} songs`
+          : `${list.length} of ${songs.length} songs`;
+    }
+
+    renderSongs(songs);
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase().trim();
+      if (!q) { renderSongs(songs); return; }
+      renderSongs(songs.filter(s =>
+        s.artist.toLowerCase().includes(q) || s.title.toLowerCase().includes(q)
+      ));
+    });
+
+    // ---- Sticky nav ----
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ---- Scroll reveal ----
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ---- Custom audio players ----
+    const audioCards = Array.from(document.querySelectorAll('.audio-card'));
+    const nowPlaying = document.getElementById('nowPlaying');
+    const nowPlayingTrack = document.getElementById('nowPlayingTrack');
+
+    function formatTime(time) {
+      if (!Number.isFinite(time)) return '0:00';
+      const mins = Math.floor(time / 60);
+      const secs = Math.floor(time % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function updateNowPlayingLabel() {
+      const activeCard = audioCards.find(card => {
+        const audio = card.querySelector('.audio-source');
+        return !audio.paused && !audio.ended;
+      });
+
+      if (!activeCard) {
+        nowPlaying.classList.remove('active');
+        nowPlayingTrack.textContent = 'Nothing playing';
+        return;
+      }
+
+      const trackName = activeCard.querySelector('.audio-track').textContent.trim();
+      nowPlaying.classList.add('active');
+      nowPlayingTrack.textContent = trackName;
+    }
+
+    function setCardPlayState(card, isPlaying) {
+      const btn = card.querySelector('.audio-play-btn');
+      card.classList.toggle('playing', isPlaying);
+      btn.textContent = isPlaying ? 'Pause' : 'Play';
+      updateNowPlayingLabel();
+    }
+
+    function pauseOtherTracks(exceptAudio) {
+      audioCards.forEach(card => {
+        const audio = card.querySelector('.audio-source');
+        if (audio !== exceptAudio) {
+          audio.pause();
+          setCardPlayState(card, false);
+        }
+      });
+    }
+
+    audioCards.forEach(card => {
+      const audio = card.querySelector('.audio-source');
+      const playBtn = card.querySelector('.audio-play-btn');
+      const seek = card.querySelector('.audio-seek');
+      const time = card.querySelector('.audio-time');
+      const waveform = card.querySelector('.audio-waveform');
+
+      waveform.innerHTML = '<span></span>'.repeat(14);
+
+      function refreshUI() {
+        const duration = audio.duration || 0;
+        const current = audio.currentTime || 0;
+        const progress = duration > 0 ? (current / duration) * 100 : 0;
+        seek.value = progress;
+        seek.style.setProperty('--seek-progress', `${progress}%`);
+        time.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+      }
+
+      playBtn.addEventListener('click', async () => {
+        if (audio.paused) {
+          pauseOtherTracks(audio);
+          try {
+            await audio.play();
+          } catch (err) {
+            setCardPlayState(card, false);
+          }
+        } else {
+          audio.pause();
+        }
+      });
+
+      audio.addEventListener('play', () => setCardPlayState(card, true));
+      audio.addEventListener('pause', () => setCardPlayState(card, false));
+      audio.addEventListener('ended', () => setCardPlayState(card, false));
+      audio.addEventListener('loadedmetadata', refreshUI);
+      audio.addEventListener('timeupdate', refreshUI);
+
+      seek.addEventListener('input', () => {
+        if (!audio.duration) return;
+        audio.currentTime = (Number(seek.value) / 100) * audio.duration;
+      });
+
+      refreshUI();
+    });
+
+    updateNowPlayingLabel();
+
+    // ---- Mobile menu ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    hamburger.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') hamburger.click();
+    });
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  </script>
+</body>
+</html>

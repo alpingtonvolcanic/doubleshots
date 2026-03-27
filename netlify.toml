@@ -1,0 +1,10 @@
+[build]
+  publish = "."
+
+[build.environment]
+  GIT_LFS_ENABLED = "true"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

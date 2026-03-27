@@ -1531,7 +1531,7 @@
         <div class="section-divider"></div>
       </div>
       <div class="showreel-shell reveal reveal-delay-1">
-        <video class="showreel-video" controls preload="metadata" playsinline>
+        <video class="showreel-video" controls preload="metadata" playsinline poster="images/gallery1.jpg">
           <source src="media/The Double Shots - Showreel.mp4" type="video/mp4" />
           Your browser does not support embedded video playback.
         </video>
@@ -1831,39 +1831,31 @@
       <p class="contact-email">
         Enquiries: <a href="mailto:doubleshotsband2022@gmail.com">doubleshotsband2022@gmail.com</a>
       </p>
-      <p class="contact-success" id="contactSuccess">Thanks for your enquiry. We have received your message and will be in touch soon.</p>
+      <p class="contact-success" id="contactSuccess">Your email app should now be open with your enquiry details pre-filled.</p>
       <form
+        id="contactForm"
         name="booking-enquiry"
-        method="POST"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        action="/?submitted=true#contact"
         class="contact-form"
       >
-        <input type="hidden" name="form-name" value="booking-enquiry" />
-        <input type="hidden" name="recipient" value="doubleshotsband2022@gmail.com" />
-        <p class="hidden-field">
-          <label>Do not fill this out if you are human: <input name="bot-field" /></label>
-        </p>
         <div class="contact-form-grid">
           <label>
             Name
-            <input type="text" name="name" required />
+            <input type="text" name="name" id="contactName" required />
           </label>
           <label>
             Email
-            <input type="email" name="email" required />
+            <input type="email" name="email" id="contactEmail" required />
           </label>
         </div>
         <label>
           Phone (optional)
-          <input type="tel" name="phone" />
+          <input type="tel" name="phone" id="contactPhone" />
         </label>
         <label>
           Event details
-          <textarea name="message" required placeholder="Tell us your date, venue, and event type..."></textarea>
+          <textarea name="message" id="contactMessage" required placeholder="Tell us your date, venue, and event type..."></textarea>
         </label>
-        <button type="submit" class="btn-primary">✉ &nbsp;Send Enquiry</button>
+        <button type="button" id="sendEnquiryMailto" class="btn-primary">✉ &nbsp;Contact Us By Email</button>
       </form>
       <div class="contact-buttons" style="margin-top:1.2rem;margin-bottom:0;">
         <a href="mailto:doubleshotsband2022@gmail.com" class="btn-secondary">Or email us directly</a>
@@ -2018,11 +2010,40 @@
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // ---- Contact form success message ----
-    const params = new URLSearchParams(window.location.search);
+    // ---- Contact by mailto ----
     const contactSuccess = document.getElementById('contactSuccess');
-    if (params.get('submitted') === 'true' && contactSuccess) {
-      contactSuccess.classList.add('show');
+    const contactName = document.getElementById('contactName');
+    const contactEmail = document.getElementById('contactEmail');
+    const contactPhone = document.getElementById('contactPhone');
+    const contactMessage = document.getElementById('contactMessage');
+    const sendEnquiryMailto = document.getElementById('sendEnquiryMailto');
+
+    if (sendEnquiryMailto) {
+      sendEnquiryMailto.addEventListener('click', () => {
+        if (!contactName.value.trim() || !contactEmail.value.trim() || !contactMessage.value.trim()) {
+          alert('Please fill in Name, Email, and Event details first.');
+          return;
+        }
+
+        const recipient = 'doubleshotsband2022@gmail.com';
+        const subject = `New enquiry from ${contactName.value.trim()}`;
+        const bodyLines = [
+          `Name: ${contactName.value.trim()}`,
+          `Email: ${contactEmail.value.trim()}`,
+          `Phone: ${contactPhone.value.trim() || 'Not provided'}`,
+          '',
+          'Event details:',
+          contactMessage.value.trim()
+        ];
+
+        const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+        window.location.href = mailtoLink;
+
+        if (contactSuccess) {
+          contactSuccess.classList.add('show');
+          contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
     }
 
     // ---- Gallery lightbox ----

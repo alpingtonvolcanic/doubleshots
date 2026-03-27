@@ -716,6 +716,61 @@
       display: none;
     }
 
+    /* ===== TESTIMONIALS ===== */
+    #testimonials {
+      background: var(--black-2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #testimonials::before {
+      content: '';
+      position: absolute;
+      top: -240px;
+      left: -180px;
+      width: 640px;
+      height: 640px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.04) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-card {
+      border: 1px solid rgba(201,168,76,0.18);
+      background: rgba(255,255,255,0.02);
+      padding: 1.5rem;
+      border-radius: 4px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .testimonial-card:hover {
+      border-color: rgba(201,168,76,0.5);
+      transform: translateY(-3px);
+    }
+
+    .testimonial-quote {
+      color: rgba(245,240,232,0.78);
+      font-size: 0.96rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-author {
+      font-size: 0.76rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
     /* ===== CONTACT ===== */
     #contact {
       background: var(--black);
@@ -1130,6 +1185,7 @@
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .offer-grid { grid-template-columns: 1fr 1fr; }
       #repertoire-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 600px) {
@@ -1158,6 +1214,7 @@
       <li><a href="#offer">What We Offer</a></li>
       <li><a href="#showreel">Showreel</a></li>
       <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
       <li><a href="#repertoire">Repertoire</a></li>
       <li><a href="#contact" class="nav-cta">Book Us</a></li>
     </ul>
@@ -1172,6 +1229,7 @@
     <a href="#offer"       onclick="closeMobileMenu()">What We Offer</a>
     <a href="#showreel"    onclick="closeMobileMenu()">Showreel</a>
     <a href="#gallery"     onclick="closeMobileMenu()">Gallery</a>
+    <a href="#testimonials" onclick="closeMobileMenu()">Testimonials</a>
     <a href="#repertoire"  onclick="closeMobileMenu()">Repertoire</a>
     <a href="#contact"     onclick="closeMobileMenu()">Book Us</a>
   </div>
@@ -1424,6 +1482,47 @@
     </div>
   </section>
 
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Testimonials</p>
+        <h2 class="section-title">What clients say about us.</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="testimonials-grid">
+        <article class="testimonial-card reveal reveal-delay-1">
+          <p class="testimonial-quote">"We have booked The Doubleshots a number of times to play at The Keller. They always go down very well with the crowd and definitely know how to get the party going. Very happy to recommend."</p>
+          <p class="testimonial-author">Hadyn W.</p>
+        </article>
+        <article class="testimonial-card reveal reveal-delay-2">
+          <p class="testimonial-quote">"We LOVED having the DoubleShots at our wedding. They were fantastic from start to finish - excellent communication ahead of the event, punctual and they then sounded incredible. Our guests loved them and they made our wedding!"</p>
+          <p class="testimonial-author">Tom B.</p>
+        </article>
+        <article class="testimonial-card reveal reveal-delay-3">
+          <p class="testimonial-quote">"We booked The DoubleShots for our NYE party and they were fantastic! Great songs choices and very entertaining performance. Everyone had a brilliant time dancing and singing along."</p>
+          <p class="testimonial-author">John G.</p>
+        </article>
+        <article class="testimonial-card reveal reveal-delay-4">
+          <p class="testimonial-quote">"Headline act Inkpen Festival Please pass on a huge thank you to Lois and the band for your performance - you guys stole the show! Lots of fantastic feedback from the audience. You guys really made the event what it was! Cheers. Vinnie."</p>
+          <p class="testimonial-author">Inkpen Festival Organiser</p>
+        </article>
+        <article class="testimonial-card reveal reveal-delay-1">
+          <p class="testimonial-quote">"Thank you so much for making our evening so brilliant. We had not booked a band before and the booking process and advice before the event were so helpful.."</p>
+          <p class="testimonial-author">John &amp; Helen Barnes</p>
+        </article>
+        <article class="testimonial-card reveal reveal-delay-2">
+          <p class="testimonial-quote">"I would just like to thank you for making my daughter Keely's birthday in July 2023 such a success. You are absolutely brilliant at what you do, fantastic vocalist and musicians. You were very professional and engaging and you kept everyone dancing all night. Thank you we would not hesitate to recommend you and we have already done that via Facebook."</p>
+          <p class="testimonial-author">Kay Dunham - Aug 2023</p>
+        </article>
+        <article class="testimonial-card reveal reveal-delay-3">
+          <p class="testimonial-quote">"The band were fantastic. Great mix of songs and everyone had a brilliant evening. Lots of our friends commented on how good it was and have said they are going to book you for their events. Thanks again to The Doubleshots!"</p>
+          <p class="testimonial-author">Geraint and Rachael</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact">
     <div class="contact-bg"></div>
@@ -1435,16 +1534,10 @@
         swiftly with availability, pricing, and anything else you need.
       </p>
       <div class="contact-buttons">
-        <a href="mailto:info@doubleshots.co.uk" class="btn-primary">
-          ✉ &nbsp;Email Us
-        </a>
-        <a href="https://doubleshots.co.uk" class="btn-secondary" target="_blank" rel="noopener">
-          ↗ &nbsp;Visit Website
+        <a href="#contact" class="btn-primary">
+          ✉ &nbsp;Contact Us
         </a>
       </div>
-      <p class="contact-email">
-        <a href="mailto:info@doubleshots.co.uk">info@doubleshots.co.uk</a>
-      </p>
     </div>
   </section>
 
@@ -1455,8 +1548,9 @@
     <div class="footer-links">
       <a href="#about">About</a>
       <a href="#showreel">Showreel</a>
+      <a href="#testimonials">Testimonials</a>
       <a href="#repertoire">Repertoire</a>
-      <a href="mailto:info@doubleshots.co.uk">Contact</a>
+      <a href="#contact">Contact</a>
     </div>
   </footer>
 

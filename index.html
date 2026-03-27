@@ -375,13 +375,16 @@
       width: 100%;
       flex-shrink: 0;
       background: var(--black);
+      display: flex;
+      justify-content: center;
+      padding: 0 0.8rem 1rem;
     }
 
     .hero-image-panel img {
       display: block;
-      width: 100%;
+      width: min(100%, 760px);
       height: auto;
-      max-height: clamp(240px, 52vh, 520px);
+      max-height: clamp(200px, 40vh, 420px);
       object-fit: contain;
       object-position: center top;
     }
@@ -643,6 +646,64 @@
 
     .offer-card p {
       color: rgba(245,240,232,0.6);
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+
+    /* ===== LOCATIONS ===== */
+    #areas {
+      background: var(--black-3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #areas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 15% 20%, rgba(192,199,208,0.06) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .areas-lead {
+      max-width: 780px;
+      color: rgba(245,240,232,0.7);
+      line-height: 1.85;
+      margin-bottom: 2.2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .area-card {
+      border: 1px solid rgba(192,199,208,0.18);
+      background: rgba(255,255,255,0.02);
+      border-radius: 4px;
+      padding: 1.4rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .area-card:hover {
+      border-color: rgba(192,199,208,0.5);
+      transform: translateY(-3px);
+    }
+
+    .area-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      margin-bottom: 0.6rem;
+      color: var(--gold-light);
+    }
+
+    .area-card p {
+      color: rgba(245,240,232,0.72);
       font-size: 0.92rem;
       line-height: 1.75;
     }
@@ -1229,6 +1290,7 @@
     @media (max-width: 900px) {
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .offer-grid { grid-template-columns: 1fr 1fr; }
+      .areas-grid { grid-template-columns: 1fr; }
       #repertoire-grid { grid-template-columns: 1fr 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
     }
@@ -1238,8 +1300,11 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       section { padding: 5rem 1.4rem; }
-      .hero-text-panel { padding: 32px 1.4rem 30px; }
-      .hero-image-panel img { max-height: 46vh; }
+      .hero-text-panel { padding: 26px 1.4rem 20px; }
+      .hero-image-panel {
+        padding: 0 0.5rem 0.8rem;
+      }
+      .hero-image-panel img { max-height: 34vh; }
       .offer-grid { grid-template-columns: 1fr; }
       #repertoire-grid { grid-template-columns: 1fr; }
       .about-stats { grid-template-columns: 1fr 1fr; }
@@ -1251,7 +1316,13 @@
     }
 
     @media (max-width: 420px) {
-      .hero-image-panel img { max-height: 42vh; }
+      .hero-image-panel img { max-height: 30vh; }
+      .hero-sub { font-size: 0.74rem; letter-spacing: 0.18em; }
+    }
+
+    @media (max-height: 760px) {
+      .hero-text-panel { padding: 22px 1.4rem 14px; }
+      .hero-image-panel img { max-height: 28vh; }
     }
   </style>
 </head>
@@ -1263,6 +1334,7 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#offer">What We Offer</a></li>
+      <li><a href="#areas">Locations</a></li>
       <li><a href="#showreel">Showreel</a></li>
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#testimonials">Testimonials</a></li>
@@ -1278,6 +1350,7 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="#about"       onclick="closeMobileMenu()">About</a>
     <a href="#offer"       onclick="closeMobileMenu()">What We Offer</a>
+    <a href="#areas"       onclick="closeMobileMenu()">Locations</a>
     <a href="#showreel"    onclick="closeMobileMenu()">Showreel</a>
     <a href="#gallery"     onclick="closeMobileMenu()">Gallery</a>
     <a href="#testimonials" onclick="closeMobileMenu()">Testimonials</a>
@@ -1398,6 +1471,38 @@
           <h3>Private Parties</h3>
           <p>Birthdays, anniversaries, garden parties, or any reason to celebrate — we tailor our set to your crowd and your vibe. A live band transforms a good party into a legendary one.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATIONS -->
+  <section id="areas">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Where We Perform</p>
+        <h2 class="section-title">Band Hire in Berkshire, Reading, Newbury and across the South East UK.</h2>
+        <div class="section-divider"></div>
+      </div>
+      <p class="areas-lead reveal reveal-delay-1">
+        Looking for <strong>band hire in Berkshire</strong> or trusted <strong>live music hire in the South East UK</strong>? Doubleshots perform at weddings, private parties and corporate events across key local areas including Reading and Newbury.
+      </p>
+      <div class="areas-grid">
+        <article class="area-card reveal reveal-delay-1">
+          <h3>Berkshire Wedding Band Hire</h3>
+          <p>We provide high-energy wedding band hire across Berkshire, with tailored live sets for receptions, evening celebrations and packed dance floors.</p>
+        </article>
+        <article class="area-card reveal reveal-delay-2">
+          <h3>Reading Live Music Hire</h3>
+          <p>Need live music hire in Reading? We regularly perform at local venues, hotels and private event spaces with a crowd-pleasing party set.</p>
+        </article>
+        <article class="area-card reveal reveal-delay-3">
+          <h3>Newbury Party Band Hire</h3>
+          <p>For birthday parties, anniversary events and celebrations in Newbury, our party band hire packages are designed to keep guests dancing all night.</p>
+        </article>
+        <article class="area-card reveal reveal-delay-4">
+          <h3>South East UK Corporate Events</h3>
+          <p>We also cover corporate event band hire across the South East UK, bringing polished live entertainment for launches, awards and company parties.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -1599,6 +1704,7 @@
     <div class="footer-copy">© 2024 Doubleshots. All rights reserved.</div>
     <div class="footer-links">
       <a href="#about">About</a>
+      <a href="#areas">Locations</a>
       <a href="#showreel">Showreel</a>
       <a href="#testimonials">Testimonials</a>
       <a href="#repertoire">Repertoire</a>

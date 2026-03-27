@@ -455,6 +455,7 @@
       .hero-content {
         padding: 2rem 2rem 5rem;
         background: linear-gradient(to top, rgba(7,7,7,0.72) 0%, rgba(7,7,7,0.45) 60%, transparent 100%);
+        transform: translateY(26px);
       }
 
       .hero-scroll {
@@ -1260,6 +1261,66 @@
       filter: brightness(1) saturate(1);
     }
 
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(7,7,7,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: min(1000px, 94vw);
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-image {
+      max-width: 100%;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      border: 1px solid rgba(192,199,208,0.45);
+      border-radius: 4px;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.55);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -0.9rem;
+      right: -0.9rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(192,199,208,0.5);
+      background: rgba(7,7,7,0.92);
+      color: var(--gold-light);
+      font-size: 1.35rem;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(192,199,208,0.2);
+    }
+
     @media (max-width: 900px) {
       .gallery-grid { columns: 2; }
       .audio-gallery-grid { grid-template-columns: 1fr; }
@@ -1480,11 +1541,11 @@
     <div class="container">
       <div class="reveal">
         <p class="section-label">Where We Perform</p>
-        <h2 class="section-title">Band Hire in Berkshire, Reading, Newbury and across the South East UK.</h2>
+        <h2 class="section-title">Band Hire in Berkshire, across the South East, and throughout the UK.</h2>
         <div class="section-divider"></div>
       </div>
       <p class="areas-lead reveal reveal-delay-1">
-        Looking for <strong>band hire in Berkshire</strong> or trusted <strong>live music hire in the South East UK</strong>? Doubleshots perform at weddings, private parties and corporate events across key local areas including Reading and Newbury.
+        Looking for <strong>band hire in Berkshire</strong> or trusted <strong>live music hire anywhere in the UK</strong>? Doubleshots perform at weddings, private parties and corporate events across Berkshire, the South East, and venues nationwide.
       </p>
       <div class="areas-grid">
         <article class="area-card reveal reveal-delay-1">
@@ -1492,16 +1553,16 @@
           <p>We provide high-energy wedding band hire across Berkshire, with tailored live sets for receptions, evening celebrations and packed dance floors.</p>
         </article>
         <article class="area-card reveal reveal-delay-2">
-          <h3>Reading Live Music Hire</h3>
-          <p>Need live music hire in Reading? We regularly perform at local venues, hotels and private event spaces with a crowd-pleasing party set.</p>
+          <h3>Reading, Newbury and Surrounding Areas</h3>
+          <p>Need live music hire in Reading, Newbury or nearby towns? We regularly perform at local venues, hotels and private event spaces with a crowd-pleasing party set.</p>
         </article>
         <article class="area-card reveal reveal-delay-3">
-          <h3>Newbury Party Band Hire</h3>
-          <p>For birthday parties, anniversary events and celebrations in Newbury, our party band hire packages are designed to keep guests dancing all night.</p>
+          <h3>South East UK Party Band Hire</h3>
+          <p>From Hampshire to Oxfordshire, Surrey to London, our party band hire packages are built for birthdays, anniversaries and celebrations that need a full dance floor.</p>
         </article>
         <article class="area-card reveal reveal-delay-4">
-          <h3>South East UK Corporate Events</h3>
-          <p>We also cover corporate event band hire across the South East UK, bringing polished live entertainment for launches, awards and company parties.</p>
+          <h3>UK-Wide Corporate & Private Events</h3>
+          <p>We also travel beyond the South East for corporate event band hire and private events across the UK, bringing polished live entertainment for launches, awards and company parties.</p>
         </article>
       </div>
     </div>
@@ -1712,6 +1773,14 @@
     </div>
   </footer>
 
+  <!-- GALLERY LIGHTBOX -->
+  <div class="lightbox" id="galleryLightbox" aria-hidden="true" role="dialog" aria-label="Expanded gallery image">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close image preview">×</button>
+      <img class="lightbox-image" id="lightboxImage" src="" alt="" />
+    </div>
+  </div>
+
   <!-- JS -->
   <script>
     // ---- Repertoire Data ----
@@ -1836,6 +1905,44 @@
     }, { threshold: 0.12 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ---- Gallery lightbox ----
+    const lightbox = document.getElementById('galleryLightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const galleryImages = document.querySelectorAll('.gallery-item img');
+
+    function openLightbox(src, alt) {
+      lightboxImage.src = src;
+      lightboxImage.alt = alt || 'Expanded gallery image';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+      document.body.style.overflow = '';
+    }
+
+    galleryImages.forEach(img => {
+      img.addEventListener('click', () => openLightbox(img.src, img.alt));
+      img.style.cursor = 'zoom-in';
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+        closeLightbox();
+      }
+    });
 
     // ---- Custom audio players ----
     const audioCards = Array.from(document.querySelectorAll('.audio-card'));

@@ -12,9 +12,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold: #C9A84C;
-      --gold-light: #E8C96A;
-      --gold-dim: #8B6914;
+      --gold: #BFC7D0;
+      --gold-light: #E6ECF2;
+      --gold-dim: #6F7882;
       --black: #070707;
       --black-2: #0f0f0f;
       --black-3: #161616;
@@ -57,7 +57,7 @@
     nav.scrolled {
       background: rgba(7,7,7,0.92);
       backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(201,168,76,0.15);
+      border-bottom: 1px solid rgba(192,199,208,0.15);
     }
 
     .nav-logo {
@@ -185,7 +185,7 @@
       display: none;
       position: absolute;
       border-radius: 50%;
-      border: 1px solid rgba(201,168,76,0.12);
+      border: 1px solid rgba(192,199,208,0.12);
       animation: pulseExpand 4s ease-out infinite;
       pointer-events: none;
     }
@@ -205,7 +205,7 @@
       position: absolute;
       width: 700px;
       height: 700px;
-      background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(192,199,208,0.07) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
       animation: spotlightFloat 8s ease-in-out infinite alternate;
@@ -252,13 +252,13 @@
       width: 100%;
       line-height: 0.88;
       letter-spacing: 0.04em;
-      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, #a07820 70%, var(--gold) 100%);
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, #929CA7 70%, var(--gold) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: fadeUp 1.2s 0.2s ease both, shimmer 6s 1.4s linear infinite;
       background-size: 300% 300%;
-      filter: drop-shadow(0 0 60px rgba(201,168,76,0.18));
+      filter: drop-shadow(0 0 60px rgba(192,199,208,0.18));
     }
 
     @keyframes shimmer {
@@ -350,8 +350,8 @@
     }
 
     .showreel-shell {
-      border: 1px solid rgba(201,168,76,0.25);
-      background: linear-gradient(145deg, rgba(201,168,76,0.06), rgba(255,255,255,0.01));
+      border: 1px solid rgba(192,199,208,0.25);
+      background: linear-gradient(145deg, rgba(192,199,208,0.06), rgba(255,255,255,0.01));
       padding: 1rem;
     }
 
@@ -360,7 +360,7 @@
       display: block;
       aspect-ratio: 16 / 9;
       background: #000;
-      border: 1px solid rgba(201,168,76,0.18);
+      border: 1px solid rgba(192,199,208,0.18);
     }
 
     .showreel-caption {
@@ -467,7 +467,7 @@
       right: -200px;
       width: 600px;
       height: 600px;
-      background: radial-gradient(ellipse, rgba(201,168,76,0.05) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(192,199,208,0.05) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
     }
@@ -500,7 +500,7 @@
     }
 
     .stat-box {
-      border: 1px solid rgba(201,168,76,0.18);
+      border: 1px solid rgba(192,199,208,0.18);
       padding: 1.8rem 1.5rem;
       position: relative;
       overflow: hidden;
@@ -511,12 +511,12 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 60%);
+      background: linear-gradient(135deg, rgba(192,199,208,0.04) 0%, transparent 60%);
       opacity: 0;
       transition: opacity 0.3s;
     }
 
-    .stat-box:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+    .stat-box:hover { border-color: rgba(192,199,208,0.4); transform: translateY(-3px); }
     .stat-box:hover::before { opacity: 1; }
 
     .stat-number {
@@ -550,7 +550,7 @@
 
     .offer-card {
       background: var(--black-3);
-      border: 1px solid rgba(201,168,76,0.12);
+      border: 1px solid rgba(192,199,208,0.12);
       padding: 2.8rem 2.2rem;
       position: relative;
       overflow: hidden;
@@ -572,12 +572,12 @@
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.06) 0%, transparent 70%);
+      background: radial-gradient(ellipse at 50% 100%, rgba(192,199,208,0.06) 0%, transparent 70%);
       opacity: 0;
       transition: opacity 0.35s;
     }
 
-    .offer-card:hover { transform: translateY(-8px); border-color: rgba(201,168,76,0.3); }
+    .offer-card:hover { transform: translateY(-8px); border-color: rgba(192,199,208,0.3); }
     .offer-card:hover::before { transform: scaleX(1); }
     .offer-card:hover::after { opacity: 1; }
 
@@ -616,7 +616,7 @@
       left: -200px;
       width: 700px;
       height: 700px;
-      background: radial-gradient(ellipse, rgba(201,168,76,0.04) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(192,199,208,0.04) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
     }
@@ -636,7 +636,7 @@
 
     .repertoire-search {
       background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(201,168,76,0.2);
+      border: 1px solid rgba(192,199,208,0.2);
       color: var(--white);
       padding: 0.7rem 1.2rem 0.7rem 2.8rem;
       font-family: 'Inter', sans-serif;
@@ -651,7 +651,7 @@
     .repertoire-search::placeholder { color: var(--grey); }
     .repertoire-search:focus {
       border-color: var(--gold);
-      background: rgba(201,168,76,0.04);
+      background: rgba(192,199,208,0.04);
     }
 
     .search-icon {
@@ -689,8 +689,8 @@
     }
 
     .song-item:hover {
-      background: rgba(201,168,76,0.06);
-      border-color: rgba(201,168,76,0.2);
+      background: rgba(192,199,208,0.06);
+      border-color: rgba(192,199,208,0.2);
     }
 
     .song-artist {
@@ -730,7 +730,7 @@
       left: -180px;
       width: 640px;
       height: 640px;
-      background: radial-gradient(ellipse, rgba(201,168,76,0.04) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(192,199,208,0.04) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
     }
@@ -744,7 +744,7 @@
     }
 
     .testimonial-card {
-      border: 1px solid rgba(201,168,76,0.18);
+      border: 1px solid rgba(192,199,208,0.18);
       background: rgba(255,255,255,0.02);
       padding: 1.5rem;
       border-radius: 4px;
@@ -752,7 +752,7 @@
     }
 
     .testimonial-card:hover {
-      border-color: rgba(201,168,76,0.5);
+      border-color: rgba(192,199,208,0.5);
       transform: translateY(-3px);
     }
 
@@ -782,7 +782,7 @@
     .contact-bg {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 65%);
+      background: radial-gradient(ellipse at 50% 50%, rgba(192,199,208,0.06) 0%, transparent 65%);
       pointer-events: none;
     }
 
@@ -845,13 +845,13 @@
       text-decoration: none;
       border-radius: 2px;
       transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
-      box-shadow: 0 4px 30px rgba(201,168,76,0.25);
+      box-shadow: 0 4px 30px rgba(192,199,208,0.25);
     }
 
     .btn-primary:hover {
       background: var(--gold-light);
       transform: translateY(-2px);
-      box-shadow: 0 8px 40px rgba(201,168,76,0.38);
+      box-shadow: 0 8px 40px rgba(192,199,208,0.38);
     }
 
     .btn-secondary {
@@ -867,13 +867,13 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       text-decoration: none;
-      border: 1px solid rgba(201,168,76,0.4);
+      border: 1px solid rgba(192,199,208,0.4);
       border-radius: 2px;
       transition: background 0.25s, border-color 0.25s, transform 0.25s;
     }
 
     .btn-secondary:hover {
-      background: rgba(201,168,76,0.08);
+      background: rgba(192,199,208,0.08);
       border-color: var(--gold);
       transform: translateY(-2px);
     }
@@ -963,15 +963,15 @@
       gap: 0.6rem;
       margin-bottom: 1.4rem;
       padding: 0.45rem 0.75rem;
-      border: 1px solid rgba(201,168,76,0.35);
+      border: 1px solid rgba(192,199,208,0.35);
       border-radius: 999px;
-      background: rgba(201,168,76,0.06);
+      background: rgba(192,199,208,0.06);
       transition: border-color 0.2s, background 0.2s;
     }
 
     .now-playing-chip.active {
-      border-color: rgba(201,168,76,0.8);
-      background: rgba(201,168,76,0.14);
+      border-color: rgba(192,199,208,0.8);
+      background: rgba(192,199,208,0.14);
     }
 
     .now-playing-label {
@@ -995,7 +995,7 @@
     }
 
     .audio-card {
-      border: 1px solid rgba(201,168,76,0.18);
+      border: 1px solid rgba(192,199,208,0.18);
       background: rgba(255,255,255,0.02);
       padding: 1rem;
       border-radius: 3px;
@@ -1003,13 +1003,13 @@
     }
 
     .audio-card:hover {
-      border-color: rgba(201,168,76,0.55);
-      background: rgba(201,168,76,0.06);
+      border-color: rgba(192,199,208,0.55);
+      background: rgba(192,199,208,0.06);
     }
 
     .audio-card.playing {
-      border-color: rgba(201,168,76,0.7);
-      background: linear-gradient(140deg, rgba(201,168,76,0.16), rgba(255,255,255,0.03));
+      border-color: rgba(192,199,208,0.7);
+      background: linear-gradient(140deg, rgba(192,199,208,0.16), rgba(255,255,255,0.03));
     }
 
     .audio-track {
@@ -1028,7 +1028,7 @@
     }
 
     .audio-play-btn {
-      border: 1px solid rgba(201,168,76,0.65);
+      border: 1px solid rgba(192,199,208,0.65);
       background: transparent;
       color: var(--gold-light);
       font-family: 'Inter', sans-serif;
@@ -1063,7 +1063,7 @@
       width: 100%;
       height: 16%;
       min-height: 3px;
-      background: rgba(201,168,76,0.35);
+      background: rgba(192,199,208,0.35);
       border-radius: 999px;
       transform-origin: center;
     }
@@ -1077,8 +1077,8 @@
     .audio-card.playing .audio-waveform span:nth-child(4n) { animation-delay: 0.12s; }
 
     @keyframes equalizer {
-      0%, 100% { transform: scaleY(0.35); background: rgba(201,168,76,0.32); }
-      50% { transform: scaleY(1); background: rgba(232,201,106,0.85); }
+      0%, 100% { transform: scaleY(0.35); background: rgba(192,199,208,0.32); }
+      50% { transform: scaleY(1); background: rgba(230,236,242,0.85); }
     }
 
     .audio-time {
@@ -1132,13 +1132,13 @@
       margin-bottom: 1rem;
       overflow: hidden;
       border-radius: 3px;
-      border: 1px solid rgba(201,168,76,0);
+      border: 1px solid rgba(192,199,208,0);
       transition: border-color 0.3s;
       cursor: pointer;
     }
 
     .gallery-item:hover {
-      border-color: rgba(201,168,76,0.55);
+      border-color: rgba(192,199,208,0.55);
     }
 
     .gallery-item img {

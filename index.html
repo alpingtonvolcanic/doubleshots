@@ -1537,11 +1537,85 @@
         <div class="section-divider"></div>
       </div>
       <div class="showreel-shell reveal reveal-delay-1">
+        <!--
         <video class="showreel-video" controls preload="metadata" playsinline poster="images/gallery1.jpg">
           <source src="media/The Double Shots - Showreel.mp4" type="video/mp4" />
           Your browser does not support embedded video playback.
         </video>
+        -->
         <p class="showreel-caption">Live energy, real crowds, zero backing tracks.</p>
+        <h3 class="audio-gallery-title reveal reveal-delay-2">Music Gallery</h3>
+        <div class="now-playing-chip reveal reveal-delay-3" id="nowPlaying" aria-live="polite">
+          <span class="now-playing-label">Now Playing</span>
+          <span class="now-playing-track" id="nowPlayingTrack">Nothing playing</span>
+        </div>
+        <div class="audio-gallery-grid reveal reveal-delay-4">
+          <div class="audio-card">
+            <p class="audio-track">Don't Stop Me Now</p>
+            <div class="audio-player-ui">
+              <button type="button" class="audio-play-btn" aria-label="Play Don't Stop Me Now">Play</button>
+              <div class="audio-waveform" aria-hidden="true"></div>
+              <p class="audio-time">0:00 / 0:00</p>
+            </div>
+            <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek Don't Stop Me Now" />
+            <audio class="audio-source" preload="metadata">
+              <source src="media/Doubleshots - Don't Stop Me Now.mp3" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="audio-card">
+            <p class="audio-track">I'm Yours</p>
+            <div class="audio-player-ui">
+              <button type="button" class="audio-play-btn" aria-label="Play I'm Yours">Play</button>
+              <div class="audio-waveform" aria-hidden="true"></div>
+              <p class="audio-time">0:00 / 0:00</p>
+            </div>
+            <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek I'm Yours" />
+            <audio class="audio-source" preload="metadata">
+              <source src="media/Doubleshots - I'm Yours.mp3" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="audio-card">
+            <p class="audio-track">Mr Brightside</p>
+            <div class="audio-player-ui">
+              <button type="button" class="audio-play-btn" aria-label="Play Mr Brightside">Play</button>
+              <div class="audio-waveform" aria-hidden="true"></div>
+              <p class="audio-time">0:00 / 0:00</p>
+            </div>
+            <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek Mr Brightside" />
+            <audio class="audio-source" preload="metadata">
+              <source src="media/Doubleshots - Mr Brightside.mp3" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="audio-card">
+            <p class="audio-track">September</p>
+            <div class="audio-player-ui">
+              <button type="button" class="audio-play-btn" aria-label="Play September">Play</button>
+              <div class="audio-waveform" aria-hidden="true"></div>
+              <p class="audio-time">0:00 / 0:00</p>
+            </div>
+            <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek September" />
+            <audio class="audio-source" preload="metadata">
+              <source src="media/Doubleshots - September.mp3" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="audio-card">
+            <p class="audio-track">Uptown Funk</p>
+            <div class="audio-player-ui">
+              <button type="button" class="audio-play-btn" aria-label="Play Uptown Funk">Play</button>
+              <div class="audio-waveform" aria-hidden="true"></div>
+              <p class="audio-time">0:00 / 0:00</p>
+            </div>
+            <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek Uptown Funk" />
+            <audio class="audio-source" preload="metadata">
+              <source src="media/Doubleshots - Uptown Funk.mp3" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1677,78 +1751,6 @@
         </div>
         <div class="gallery-item">
           <img src="images/gallery6.jpg" alt="Doubleshots live performance" loading="lazy" />
-        </div>
-      </div>
-      <h3 class="audio-gallery-title reveal reveal-delay-2">Music Gallery</h3>
-      <div class="now-playing-chip reveal reveal-delay-3" id="nowPlaying" aria-live="polite">
-        <span class="now-playing-label">Now Playing</span>
-        <span class="now-playing-track" id="nowPlayingTrack">Nothing playing</span>
-      </div>
-      <div class="audio-gallery-grid reveal reveal-delay-4">
-        <div class="audio-card">
-          <p class="audio-track">Don't Stop Me Now</p>
-          <div class="audio-player-ui">
-            <button type="button" class="audio-play-btn" aria-label="Play Don't Stop Me Now">Play</button>
-            <div class="audio-waveform" aria-hidden="true"></div>
-            <p class="audio-time">0:00 / 0:00</p>
-          </div>
-          <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek Don't Stop Me Now" />
-          <audio class="audio-source" preload="metadata">
-            <source src="media/Doubleshots - Don't Stop Me Now.mp3" type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-        <div class="audio-card">
-          <p class="audio-track">I'm Yours</p>
-          <div class="audio-player-ui">
-            <button type="button" class="audio-play-btn" aria-label="Play I'm Yours">Play</button>
-            <div class="audio-waveform" aria-hidden="true"></div>
-            <p class="audio-time">0:00 / 0:00</p>
-          </div>
-          <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek I'm Yours" />
-          <audio class="audio-source" preload="metadata">
-            <source src="media/Doubleshots - I'm Yours.mp3" type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-        <div class="audio-card">
-          <p class="audio-track">Mr Brightside</p>
-          <div class="audio-player-ui">
-            <button type="button" class="audio-play-btn" aria-label="Play Mr Brightside">Play</button>
-            <div class="audio-waveform" aria-hidden="true"></div>
-            <p class="audio-time">0:00 / 0:00</p>
-          </div>
-          <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek Mr Brightside" />
-          <audio class="audio-source" preload="metadata">
-            <source src="media/Doubleshots - Mr Brightside.mp3" type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-        <div class="audio-card">
-          <p class="audio-track">September</p>
-          <div class="audio-player-ui">
-            <button type="button" class="audio-play-btn" aria-label="Play September">Play</button>
-            <div class="audio-waveform" aria-hidden="true"></div>
-            <p class="audio-time">0:00 / 0:00</p>
-          </div>
-          <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek September" />
-          <audio class="audio-source" preload="metadata">
-            <source src="media/Doubleshots - September.mp3" type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-        <div class="audio-card">
-          <p class="audio-track">Uptown Funk</p>
-          <div class="audio-player-ui">
-            <button type="button" class="audio-play-btn" aria-label="Play Uptown Funk">Play</button>
-            <div class="audio-waveform" aria-hidden="true"></div>
-            <p class="audio-time">0:00 / 0:00</p>
-          </div>
-          <input class="audio-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek Uptown Funk" />
-          <audio class="audio-source" preload="metadata">
-            <source src="media/Doubleshots - Uptown Funk.mp3" type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
         </div>
       </div>
     </div>
@@ -1893,14 +1895,17 @@
       { artist: "ABBA", title: "Gimme Gimme Gimme" },
       { artist: "ABBA", title: "Mamma Mia" },
       { artist: "Amy Winehouse", title: "Valerie" },
+      { artist: "The Automatic", title: "Monster" },
       { artist: "Blondie", title: "Call Me" },
       { artist: "Blondie", title: "Hanging on the Telephone" },
+      { artist: "Jacksons", title: "Blame It on the Boogie" },
       { artist: "Blur", title: "Parklife" },
       { artist: "Bon Jovi", title: "Livin' on a Prayer" },
       { artist: "Bruno Mars", title: "Locked out of Heaven" },
       { artist: "Bryan Adams", title: "Summer of '69" },
       { artist: "Cee Lo Green", title: "Forget You" },
       { artist: "Chic", title: "Good Times" },
+      { artist: "Chic", title: "Le Freak" },
       { artist: "The Commitments", title: "Mustang Sally" },
       { artist: "Daft Punk", title: "Get Lucky" },
       { artist: "Dandy Warhols", title: "Bohemian Like You" },
@@ -1911,12 +1916,14 @@
       { artist: "Dua Lipa", title: "Don't Start Now" },
       { artist: "Earth, Wind & Fire", title: "September" },
       { artist: "Elton John", title: "I'm Still Standing" },
+      { artist: "Franz Ferdinand", title: "Take Me Out" },
       { artist: "Fleetwood Mac", title: "Dreams" },
       { artist: "Florence + the Machine", title: "You Got the Love" },
       { artist: "Four Seasons", title: "Oh What a Night" },
       { artist: "George Michael", title: "Faith" },
       { artist: "Girls Aloud", title: "Love Machine" },
       { artist: "Huey Lewis", title: "Power of Love" },
+      { artist: "The Kaiser Chiefs", title: "I Predict a Riot" },
       { artist: "Jamiroquai", title: "Love Foolosophy" },
       { artist: "Jason Mraz", title: "I'm Yours" },
       { artist: "Jet", title: "Are You Gonna Be My Girl" },
@@ -1928,6 +1935,7 @@
       { artist: "Michael Jackson", title: "Thriller" },
       { artist: "Madness", title: "It Must Be Love" },
       { artist: "Mark Ronson", title: "Uptown Funk" },
+      { artist: "The Killers", title: "Somebody Told Me" },
       { artist: "Moloko", title: "Sing It Back" },
       { artist: "Oasis", title: "Don't Look Back in Anger" },
       { artist: "Oasis", title: "Wonderwall" },
@@ -1948,6 +1956,7 @@
       { artist: "Sophie Ellis-Bextor", title: "Groovejet" },
       { artist: "Stevie Wonder", title: "Signed Sealed Delivered" },
       { artist: "Stevie Wonder", title: "Superstition" },
+      { artist: "Stereophonics", title: "Dakota" },
       { artist: "Taylor Swift", title: "Shake It Off" },
       { artist: "The Killers", title: "Mr Brightside" },
       { artist: "The Kooks", title: "Naive" },
@@ -1955,6 +1964,7 @@
       { artist: "The Strokes", title: "Last Nite" },
       { artist: "Walk the Moon", title: "Shut Up and Dance" },
       { artist: "Wheatus", title: "Teenage Dirtbag" },
+      { artist: "Wild Cherry", title: "Play That Funky Music" },
       { artist: "Wilson Pickett", title: "Higher and Higher" },
       { artist: "10cc", title: "Dreadlock Holiday" },
     ];
